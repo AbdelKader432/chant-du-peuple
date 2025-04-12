@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Le Chant du Peuple</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100vh;
+      padding: 2rem;
+      background-image: url('https://upload.wikimedia.org/wikipedia/commons/9/98/Vladimir_Lenin_1920s_Russian_Soviet_poster.jpg');
+      background-size: cover;
+      background-position: center;
+      backdrop-filter: brightness(0.5) blur(3px);
+    }
+    h1 {
+      font-size: 3rem;
+      color: #ff5555;
+      text-shadow: 2px 2px 4px black;
+      margin-bottom: 0.5rem;
+    }
+    p {
+      font-style: italic;
+      color: #ddd;
+      text-shadow: 1px 1px 3px black;
+      margin-bottom: 2rem;
+    }
+    .player {
+      background: rgba(0, 0, 0, 0.7);
+      padding: 2rem;
+      border-radius: 1rem;
+      box-shadow: 0 0 30px rgba(255, 0, 0, 0.6);
+      width: 100%;
+      max-width: 600px;
+      text-align: center;
+    }
+    .controls {
+      margin-top: 1rem;
+      display: flex;
+      justify-content: space-around;
+    }
+    button {
+      background-color: #ff3333;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    button:hover {
+      background-color: #cc0000;
+    }
+    .track-title {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      color: #ffaaaa;
+    }
+    audio {
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <h1>Le Chant du Peuple</h1>
+  <p>Playlist révolutionnaire antifasciste</p>
+  <div class="player">
+    <div class="track-title" id="track-title">Lecture en cours : Le Chant des Partisans</div>
+    <audio id="audio-player" controls autoplay>
+      <source src="https://archive.org/download/LeChantDesPartisans/Le%20Chant%20des%20Partisans.mp3" type="audio/mpeg">
+    </audio>
+    <div class="controls">
+      <button onclick="prevTrack()">⏮ Précédent</button>
+      <button onclick="nextTrack()">Suivant ⏭</button>
+    </div>
+  </div>
+
+  <script>
+    const tracks = [
+      {
+        title: "Le Chant des Partisans",
+        url: "https://archive.org/download/LeChantDesPartisans/Le%20Chant%20des%20Partisans.mp3"
+      },
+      {
+        title: "L'Internationale (FR)",
+        url: "https://archive.org/download/LInternationaleFrancaise/Internationale%20%28Français%29.mp3"
+      },
+      {
+        title: "Bella Ciao",
+        url: "https://archive.org/download/BellaCiao_753/BellaCiao.mp3"
+      },
+      {
+        title: "La Semaine Sanglante",
+        url: "https://archive.org/download/Commune_de_Paris/La%20semaine%20sanglante.mp3"
+      },
+      {
+        title: "L'Internationale (Armée Rouge)",
+        url: "https://archive.org/download/LArmeRougeInternationaleVersionSovietique/Arm%C3%A9e%20Rouge%20-%20Internationale.mp3"
+      },
+      {
+        title: "Brigada Flores Magon – Tout pour le peuple",
+        url: "https://archive.org/download/brigada-flores-magon-tout-pour-le-peuple/BFM-ToutPourLePeuple.mp3"
+      }
+    ];
+
+    let currentIndex = 0;
+    const audioPlayer = document.getElementById('audio-player');
+    const trackTitle = document.getElementById('track-title');
+
+    function updateTrack(index) {
+      const track = tracks[index];
+      audioPlayer.src = track.url;
+      trackTitle.textContent = `Lecture en cours : ${track.title}`;
+      audioPlayer.play();
+    }
+
+    function nextTrack() {
+      currentIndex = (currentIndex + 1) % tracks.length;
+      updateTrack(currentIndex);
+    }
+
+    function prevTrack() {
+      currentIndex = (currentIndex - 1 + tracks.length) % tracks.length;
+      updateTrack(currentIndex);
+    }
+
+    audioPlayer.addEventListener('ended', nextTrack);
+  </script>
+</body>
+</html>
